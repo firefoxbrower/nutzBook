@@ -1,0 +1,1 @@
+-server -XX:PermSize=256M -XX:MaxPermSize=512m
