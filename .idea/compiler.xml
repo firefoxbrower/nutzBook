@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Nutz-Book" />
+        <module name="nutzBook" />
+        <module name="NutzBook" />
+        <module name="nutzbook" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Nutz-Book" target="1.8" />
+      <module name="nutzBook" target="1.8" />
+      <module name="nutzbook" target="1.8" />
+      <module name="NutzBook" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
