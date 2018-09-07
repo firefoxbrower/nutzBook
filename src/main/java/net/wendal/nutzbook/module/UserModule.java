@@ -40,6 +40,12 @@ public class UserModule {
         return dao.count(User.class);
     }
 
+    @GET
+    @At("/login")
+    @Filters
+    @Ok("jsp:jsp.user.login") // 降内部重定向到登录jsp
+    public void loginPage() {}
+
     /**
      *  无验证登录
      * */
@@ -55,6 +61,8 @@ public class UserModule {
         }
     }*/
 
+    
+    
     /**
      *  带有验证登录
      *  请注意一下 SecurityUtils 那一行.
@@ -77,7 +85,8 @@ public class UserModule {
         if (userId < 0) {
             return re.setv("ok", false).setv("msg", "用户名或密码错误");
         } else {
-            session.setAttribute("me", user.getId());
+            //session.setAttribute("me", user.getId());
+             session.setAttribute("me", userId);
             // 完成nutdao_realm后启用.
             // SecurityUtils.getSubject().login(new SimpleShiroToken(userId));
             return re.setv("ok", true);
@@ -171,4 +180,6 @@ public class UserModule {
             user.setName(user.getName().trim());
         return null;
     }
+    
+    
 }
