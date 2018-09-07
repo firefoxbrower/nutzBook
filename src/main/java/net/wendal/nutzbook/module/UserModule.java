@@ -9,11 +9,14 @@ import net.wendal.nutzbook.bean.User;
 import net.wendal.nutzbook.bean.UserProfile;
 import net.wendal.nutzbook.service.UserService;
 import net.wendal.nutzbook.util.Toolkit;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.nutz.aop.interceptor.ioc.TransAop;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.QueryResult;
 import org.nutz.dao.pager.Pager;
+import org.nutz.integration.shiro.SimpleShiroToken;
 import org.nutz.ioc.aop.Aop;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -34,6 +37,7 @@ public class UserModule {
     protected Dao dao;
 
     @Inject protected UserService userService;
+    
 
     @At
     public int count() { // 统计用户数的方法,算是个测试点
@@ -44,7 +48,9 @@ public class UserModule {
     @At("/login")
     @Filters
     @Ok("jsp:jsp.user.login") // 降内部重定向到登录jsp
-    public void loginPage() {}
+    public void loginPage() {
+        
+    }
 
     /**
      *  无验证登录
@@ -85,10 +91,9 @@ public class UserModule {
         if (userId < 0) {
             return re.setv("ok", false).setv("msg", "用户名或密码错误");
         } else {
-            //session.setAttribute("me", user.getId());
              session.setAttribute("me", userId);
             // 完成nutdao_realm后启用.
-            // SecurityUtils.getSubject().login(new SimpleShiroToken(userId));
+             SecurityUtils.getSubject().login(new SimpleShiroToken(userId));
             return re.setv("ok", true);
         }
     }
@@ -100,6 +105,7 @@ public class UserModule {
     }
 
     @At
+    @RequiresUser
     public Object add(@Param("..")User user) { // 两个点号是按对象属性一一设置
         NutMap re = new NutMap();
         String msg = checkUser(user, true);
@@ -112,6 +118,7 @@ public class UserModule {
     }
 
     @At
+    @RequiresUser
     public Object update(@Param("password")String password, @Attr("me") int me){
         NutMap re = new NutMap();
        
@@ -123,6 +130,7 @@ public class UserModule {
 
 
     @At
+    @RequiresUser
     @Aop(TransAop.READ_COMMITTED)
     public Object delete(@Param("id")int id, @Attr("me")int me) {
         if (me == id) {
@@ -136,6 +144,7 @@ public class UserModule {
     }
 
     @At
+    @RequiresUser
     public Object query(@Param("name")String name, @Param("..")Pager pager) {
         Cnd cnd = Strings.isBlank(name)? null : Cnd.where("name", "like", "%"+name+"%");
         QueryResult qr = new QueryResult();

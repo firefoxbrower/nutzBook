@@ -9,6 +9,7 @@ import java.util.Date;
 import net.wendal.nutzbook.bean.UserProfile;
 import net.wendal.nutzbook.util.Toolkit;
 
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.DaoException;
 import org.nutz.dao.FieldFilter;
@@ -39,6 +40,8 @@ import javax.servlet.http.HttpSession;
 public class UserProfileModule extends BaseModule {
 
     private static final Log log = Logs.get();
+    
+    
     @At
     public UserProfile get(@Attr(scope=Scope.SESSION, value="me")int userId) {
         UserProfile profile = Daos.ext(dao, FieldFilter.locked(UserProfile.class, "avatar")).fetch(UserProfile.class, userId);
@@ -54,6 +57,7 @@ public class UserProfileModule extends BaseModule {
 
     @At
     @AdaptBy(type=JsonAdaptor.class)
+    @RequiresUser
     @Ok("void")
     public void update(@Param("..")UserProfile profile, @Attr(scope=Scope.SESSION, value="me")int userId) {
         if (profile == null)
