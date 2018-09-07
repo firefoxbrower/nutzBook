@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>用户详情页</title>
     <script type="text/javascript"
-            src="${pageContext.request.contextPath}/js/jquery/1.8.3/jquery.min.js"></script>
+            src="${pageContext.request.contextPath}/material-design-css/rs/js/jquery.js"></script>
     <script type="text/javascript">
         var base = '${base}';
         $.fn.serializeObject = function() {
