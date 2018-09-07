@@ -3,6 +3,7 @@ package net.wendal.nutzbook;
 import net.wendal.nutzbook.bean.User;
 
 import net.wendal.nutzbook.service.UserService;
+import net.wendal.nutzbook.service.impl.UserServiceImpl;
 import org.apache.commons.mail.HtmlEmail;
 import org.nutz.dao.Dao;
 import org.nutz.dao.util.Daos;
@@ -37,14 +38,14 @@ public class MainSetup  implements Setup {
             user.setUpdateTime(new Date());
             dao.insert(user);*/
 
-            UserService us = ioc.get(UserService.class);
+            UserService us = ioc.get(UserServiceImpl.class);
             us.add("admin", "123456");
         }
 
         /**
          * 获取quartz的Scheduler,这样就自动触发了计划任务的启动 
          * */   
-        // ioc.get(Scheduler.class);
+        //ioc.get(Scheduler.class);
         
         /**
          * NutIoc中的Bean是完全懒加载模式的,不获取就不生成,不初始化,所以,为了触发计划任务的加载
@@ -72,8 +73,9 @@ public class MainSetup  implements Setup {
     }
 
     @Override
-    public void destroy(NutConfig nutConfig) {
+    public void destroy(NutConfig nc) {
           // webapp销毁之前执行的逻辑
          // 这个时候依然可以从nc取出ioc, 然后取出需要的ioc 对象进行操作
+ 
     }
 }

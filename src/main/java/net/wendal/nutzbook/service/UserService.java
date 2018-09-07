@@ -2,6 +2,7 @@ package net.wendal.nutzbook.service;
 
 import net.wendal.nutzbook.bean.User;
 
+
 public interface UserService {
     
    User add(String name, String password);

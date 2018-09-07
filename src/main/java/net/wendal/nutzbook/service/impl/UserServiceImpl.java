@@ -10,7 +10,8 @@ import org.nutz.service.IdNameEntityService;
 import java.util.Date;
 
 
-@IocBean(fields="dao") //含义是需要注入父类的dao属性
+
+@IocBean(fields="dao",name="UserService") //含义是需要注入父类的dao属性
 public class UserServiceImpl extends IdNameEntityService<User> implements UserService {
     
     @Override
